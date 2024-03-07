@@ -10,4 +10,4 @@ def do_pack():
     fname = f'web_static_{datetime.now().strftime("%Y%m%d%H%M%S")}'
     local("mkdir -p versions/")
     save = local(f"tar -cvzf versions/{fname}.tgz web_static")
-    return f"versions/{fname}" if not save.failed else None
+    return f"versions/{fname}.tgz" if not save.failed else None
