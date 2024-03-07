@@ -15,11 +15,12 @@ def do_deploy(archive_path):
             direc = filename.split('.')[0]
             put(archive_path, '/tmp/')
             fname = f'/data/web_static/releases/{direc}'
-            run(f"sudo mkdir -p /data/web_static/releases/{direc}")
+            run(f"sudo mkdir -p /data/web_static/releases/{direc}/")
             run(f'sudo tar -xzf /tmp/{filename} -C {fname}')
             run(f'sudo rm /tmp/{filename}')
             run(f'sudo mv {fname}/web_static/* {fname}/')
-            run(f'sudo rm -f /data/web_static/current')
+            run(f'sudo rm -rf {fname}/web_static')
+            run(f'sudo rm -rf /data/web_static/current')
             run(f'sudo ln -sf {fname}/ /data/web_static/current')
             return True
         except Exception as e:
