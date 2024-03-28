@@ -22,9 +22,9 @@ def c_route(text):
     """c route"""
     return f"C {text.replace('_', ' ')}"
 
-
+@app.route('/python', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
-def p_route(text):
+def p_route(text="is cool"):
     """p route"""
     return f"Python {text.replace('_', ' ')}"
 
