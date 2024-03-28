@@ -8,7 +8,7 @@ import os
 
 class State(BaseModel, Base):
     """ State class """
-    if os.getenv("HBNB_TYPE_STORAGE") != "db":
+    if os.getenv("HBNB_TYPE_STORAGE") == "file":
         @property
         def cities(self):
             """get cities"""
