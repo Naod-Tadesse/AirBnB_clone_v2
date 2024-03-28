@@ -7,14 +7,16 @@ from sqlalchemy import Integer, Table, String, Column, Float, ForeignKey
 import os
 from sqlalchemy.orm import relationship
 
-place_amenity = Table(
-    'place_amenity',
-    Base.metadata,
-    Column(
-        'place_id', String(60), ForeignKey('places.id'), nullable=False),
-    Column(
-        'amenity_id', String(60), ForeignKey('amenities.id'), nullable=False)
-    )
+if os.getenv("HBNB_TYPE_STORAGE") == 'db':
+    place_amenity = Table(
+        'place_amenity',
+        Base.metadata,
+        Column(
+            'place_id', String(60), ForeignKey('places.id'), nullable=False),
+        Column(
+            'amenity_id', String(60), ForeignKey('amenities.id'),
+            nullable=False)
+        )
 
 
 class Place(BaseModel, Base):
@@ -42,6 +44,16 @@ class Place(BaseModel, Base):
 
     else:
         amenity_ids = []
+        city_id = ""
+        name = ""
+        user_id = ""
+        number_bathrooms = 0
+        number_rooms = ""
+        max_guest = 0
+        latitude = 0.0
+        longitude = 0.0
+        price_by_night = 0
+        description = ""
 
         @property
         def reviews(self):
@@ -60,7 +72,7 @@ class Place(BaseModel, Base):
                 if Amenity.place_id == self.idi
             ]
 
-        @amienities.setter
+        @amenities.setter
         def amenities(self):
             """all amenities"""
             Place.amenity_ids = [
