@@ -56,6 +56,10 @@ class DBStorage:
         """entry new"""
         self.__session.add(obj)
 
+    def close(self):
+        """the session closing"""
+        self.__session.close()
+
     def save(self):
         """persist change"""
         self.__session.commit()
