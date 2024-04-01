@@ -55,6 +55,10 @@ class Place(BaseModel, Base):
         price_by_night = 0
         description = ""
 
+        def __init__(self, *args, **kwargs):
+            """initializes state"""
+            super().__init__(*args, **kwargs)
+
         @property
         def reviews(self):
             """ge all review"""

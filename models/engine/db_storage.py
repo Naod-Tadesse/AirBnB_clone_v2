@@ -39,13 +39,13 @@ class DBStorage:
     def all(self, name=None):
         """this method querys database"""
         new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
+        for class_name, class_obj in self.class_list.items():
+            if name is None or name == class_name:
+                objs = self.__session.query(class_obj).all()
                 for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
+                    key = f"{class_name}.{obj.id}"
                     new_dict[key] = obj
-        return (new_dict)
+        return new_dict
 
     def new(self, obj):
         """entry new"""
