@@ -38,19 +38,14 @@ class DBStorage:
 
     def all(self, name=None):
         """this method querys database"""
-        res = {}
-        for k, v in DBStorage.class_list.items():
-            if not name:
-                qr = self.__session.query(DBStorage.class_list[k])
-                for i in qr:
-                    res[i.__class__.__name__ + '.' + i.id] = i
-            elif name == k:
-                qr = self.__session.query(DBStorage.class_list[k]).all()
-                for i in qr:
-                    res[i.__class__.__name__ + '.' + i.id] = i
-            else:
-                pass
-        return res
+        new_dict = {}
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                objs = self.__session.query(classes[clss]).all()
+                for obj in objs:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    new_dict[key] = obj
+        return (new_dict)
 
     def new(self, obj):
         """entry new"""
