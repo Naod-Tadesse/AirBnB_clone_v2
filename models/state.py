@@ -14,12 +14,20 @@ class State(BaseModel, Base):
         cities = relationship(
             "City", backref="state", cascade="all, delete-orphan")
     else:
+        name = ""
+
+    def __init(self, *args, **kwargs):
+        """initialize state"""
+        super().__init__(*args, **kwargs)
+
+    if os.getenv("HBNB_TYPE_STORAGE") != "db":
         @property
         def cities(self):
             """get cities"""
             from models import storage
+            from models.city import City
             result = [
-                city for city in storage.all("City").values()
+                city for city in storage.all(City).values()
                 if city.state_id == self.id
             ]
             return result
