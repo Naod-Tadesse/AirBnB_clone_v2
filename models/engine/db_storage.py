@@ -38,8 +38,10 @@ class DBStorage:
 
     def all(self, name=None):
         """this method querys database"""
+        if isinstance(name, type):
+            name = name.__name__
         new_dict = {}
-        for class_name, class_obj in self.class_list.items():
+        for class_name, class_obj in DBStorage.class_list.items():
             if name is None or name == class_name:
                 objs = self.__session.query(class_obj).all()
                 for obj in objs:
@@ -68,7 +70,7 @@ class DBStorage:
 
     def reload(self):
         """handler for connection"""
+        Base.metadata.create_all(self.__engine)
         connection = sqlalchemy.orm.sessionmaker(
             bind=self.__engine, expire_on_commit=False)
-        Base.metadata.create_all(self.__engine)
         self.__session = sqlalchemy.orm.scoped_session(connection)()
